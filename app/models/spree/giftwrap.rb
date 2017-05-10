@@ -6,6 +6,10 @@ module Spree
       Spree::Money.new(price, currency: currency)
     end
 
+    def compute_amount(order)
+      price
+    end
+
     def label(currency = 'USD')
       "#{title} (#{amount(currency)})"
     end

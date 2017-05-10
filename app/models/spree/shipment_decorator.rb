@@ -1,4 +1,5 @@
 Spree::Shipment.class_eval do
+  alias_method :super_final_price, :final_price
   belongs_to :giftwrap
 
   def add_giftwrap(giftwrap = nil)
@@ -7,6 +8,10 @@ Spree::Shipment.class_eval do
   end
 
   def giftwrap?
-    !stock_location.no_giftwrap
+    !stock_location.no_giftwrap && !include_no_giftwrap_product?
+  end
+
+  def include_no_giftwrap_product?
+    !inventory_units.find { |unit| unit.variant.product.no_giftwrap }.blank?
   end
 end
