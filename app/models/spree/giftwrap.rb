@@ -1,6 +1,6 @@
 module Spree
   class Giftwrap < ActiveRecord::Base
-    TOTAL_LABEL = Spree.t('giftwrap.total_label')
+    TOTAL_LABEL = Spree.t('giftwrap')
 
     def amount(currency = 'USD')
       Spree::Money.new(price, currency: currency)

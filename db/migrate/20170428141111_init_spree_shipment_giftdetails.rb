@@ -7,7 +7,6 @@ class InitSpreeShipmentGiftdetails < ActiveRecord::Migration
       t.datetime "updated_at"
     end
 
-    add_column :spree_shipments, :giftwrap_price, :decimal, precision: 10, scale: 2, default: 0.0, null: false
     add_column :spree_shipments, :giftwrap_id, :integer, null: true
     add_column :spree_shipments, :giftmessage, :text, null: false, default: ''
 

@@ -1,0 +1,10 @@
+<% if @order.has_giftwrap? %>
+  <tr>
+    <td data-hook='admin_order_tab_giftwrap_title'>
+      <strong><%= Spree.t(:giftwrap) %>:</strong>
+    </td>
+    <td id='item_total'>
+      <%= @order.giftwrap_total.to_html %>
+    </td>
+  </tr>
+<% end %>

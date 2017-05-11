@@ -6,6 +6,19 @@ Spree::Shipment.class_eval do
     !stock_location.no_giftwrap && !include_no_giftwrap_product?
   end
 
+  def giftwrap_amount
+    return 0 if !has_giftwrap?
+    adjustments.nonzero.eligible.giftwrap.map(&:amount).sum
+  end
+
+  def giftwrap_total
+    Spree::Money.new(giftwrap_amount, currency: currency)
+  end
+
+  def has_giftwrap?
+    adjustments.nonzero.eligible.giftwrap.exists?
+  end
+
   def include_no_giftwrap_product?
     !inventory_units.find { |unit| unit.variant.product.no_giftwrap }.blank?
   end

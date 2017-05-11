@@ -1,7 +1,6 @@
 en:
   spree:
-    giftwrap:
-      total_label: "Gift Wrap"
+    giftwrap: "Gift Wrap"
     add_gift_message: "Add Gift Message"
     add_gift_wrapping: "Add Gift Wrapping"
     disable_giftwrap: "Disable Giftwrap"

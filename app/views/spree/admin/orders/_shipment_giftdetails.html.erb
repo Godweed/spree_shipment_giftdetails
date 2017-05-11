@@ -1,0 +1,22 @@
+<% unless shipment.giftwrap.blank? %>
+  <tr>
+    <td colspan="4">
+      <strong>Gift Wrap</strong>
+    </td>
+    <td class="total text-center">
+      <%= shipment.giftwrap_total.to_html %>
+    </td>
+    <td></td>
+  </tr>
+<% end %>
+
+<% unless shipment.giftmessage.blank? %>
+  <tr>
+    <td>
+      <strong>Gift Message</strong>
+    </td>
+    <td colspan="5">
+      <%= shipment.giftmessage %>
+    </td>
+  </tr>
+<% end %>
