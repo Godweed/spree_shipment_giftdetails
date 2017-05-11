@@ -1,5 +1,7 @@
-Spree::StockLocation.class_eval do
-  def giftwrap?
-    !no_giftwrap
+module Spree
+  StockLocation.class_eval do
+    def giftwrap?
+      !no_giftwrap
+    end
   end
 end
