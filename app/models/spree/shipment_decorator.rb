@@ -1,17 +1,37 @@
 Spree::Shipment.class_eval do
-  alias_method :super_final_price, :final_price
+  alias_method :super_update_adjustments, :update_adjustments
   belongs_to :giftwrap
 
-  def add_giftwrap(giftwrap = nil)
-    giftwrap = Spree::Giftwrap.first if giftwrap.nil?
-    update(giftwrap: giftwrap, giftwrap_price: giftwrap_price)
-  end
-
-  def giftwrap?
+  def giftwrap_allowed?
     !stock_location.no_giftwrap && !include_no_giftwrap_product?
   end
 
   def include_no_giftwrap_product?
     !inventory_units.find { |unit| unit.variant.product.no_giftwrap }.blank?
+  end
+
+  private
+
+  def adjust_giftwrap
+    if giftwrap.blank?
+      adjustments.giftwrap.each(&:delete)
+    elsif adjustments.giftwrap.map(&:amount).sum != giftwrap.price
+      adjustments.giftwrap.each(&:delete)
+      Spree::Adjustment.create!(
+        adjustable: self,
+        label: Spree::Giftwrap::TOTAL_LABEL,
+        order: order,
+        source: giftwrap,
+        amount: giftwrap.price
+      )
+    end
+  end
+
+  def update_adjustments
+    if giftwrap_id_changed? && state != 'shipped'
+      adjust_giftwrap
+      recalculate_adjustments
+    end
+    super_update_adjustments
   end
 end
