@@ -5,8 +5,6 @@ module Spree
 
     def apply_giftwrap_adjustment
       order.shipments.each do |shipment|
-
-        binding.pry
         if shipment.giftwrap.blank?
           shipment.adjustments.giftwrap(&:delete)
         elsif shipment.adjustments.giftwrap.map(&:amount).sum != shipment.giftwrap.price
@@ -20,7 +18,6 @@ module Spree
           )
 
           shipment.update(non_taxable_adjustment_total: shipment.giftwrap.price)
-          binding.pry
         end
       end
     end

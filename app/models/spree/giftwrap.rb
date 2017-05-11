@@ -1,5 +1,8 @@
 module Spree
   class Giftwrap < ActiveRecord::Base
+    include Spree::CalculatedAdjustments
+    include Spree::AdjustmentSource
+
     TOTAL_LABEL = Spree.t('giftwrap.total_label')
 
     def amount(currency = 'USD')
