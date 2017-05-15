@@ -4,7 +4,7 @@ module Spree
     belongs_to :giftwrap
 
     def giftwrap_allowed?
-      !stock_location.no_giftwrap && !include_no_giftwrap_product?
+      !stock_location.no_giftwrap && !include_only_no_giftwrap_products?
     end
 
     def giftwrap_amount
@@ -20,8 +20,8 @@ module Spree
       adjustments.nonzero.eligible.giftwrap.exists?
     end
 
-    def include_no_giftwrap_product?
-      !inventory_units.find { |unit| unit.variant.product.no_giftwrap }.blank?
+    def include_only_no_giftwrap_products?
+      inventory_units.find { |unit| !unit.variant.product.no_giftwrap }.blank?
     end
 
     private
