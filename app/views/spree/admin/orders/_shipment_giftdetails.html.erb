@@ -13,6 +13,22 @@
 <% unless shipment.giftmessage.blank? %>
   <tr>
     <td>
+      <strong>From</strong>
+    </td>
+    <td colspan="5">
+      <%= shipment.message_from %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <strong>To</strong>
+    </td>
+    <td colspan="5">
+      <%= shipment.message_to %>
+    </td>
+  </tr>
+  <tr>
+    <td>
       <strong>Gift Message</strong>
     </td>
     <td colspan="5">
