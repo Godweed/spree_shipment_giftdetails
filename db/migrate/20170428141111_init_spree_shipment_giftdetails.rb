@@ -1,4 +1,4 @@
-class InitSpreeShipmentGiftdetails < ActiveRecord::Migration
+class InitSpreeShipmentGiftdetails < ActiveRecord::Migration[4.2]
   def change
     create_table :spree_giftwraps, force: :cascade do |t|
       t.string   "title"
