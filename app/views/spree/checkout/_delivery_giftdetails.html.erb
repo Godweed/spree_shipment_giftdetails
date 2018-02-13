@@ -1,6 +1,6 @@
 <h1>Gift details</h1>
 <%= form.fields_for :shipments do |ship_form| %>
-  <% if ship_form.object.giftwrap? && !active_giftwrap.nil? %>
+  <% if ship_form.object.giftwrap_allowed? && !active_giftwrap.nil? %>
     <%= ship_form.check_box :giftwrap_id, {}, active_giftwrap.id %>
     <%= ship_form.label :giftwrap_id, "#{Spree.t(:add_gift_wrapping)} (#{active_giftwrap.amount})" %>
   <% else %>

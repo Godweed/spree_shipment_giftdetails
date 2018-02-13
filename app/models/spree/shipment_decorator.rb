@@ -1,6 +1,5 @@
 module Spree
   Shipment.class_eval do
-    alias_method :super_update_adjustments, :update_adjustments
     belongs_to :giftwrap
 
     def giftwrap_allowed?
@@ -46,7 +45,12 @@ module Spree
         adjust_giftwrap
         recalculate_adjustments
       end
-      super_update_adjustments
+
+      # super START
+      if saved_change_to_cost? && state != 'shipped'
+        recalculate_adjustments
+      end
+      # super END
     end
   end
 end

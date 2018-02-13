@@ -1,4 +1,4 @@
-class InitSpreeShipmentGiftdetails < ActiveRecord::Migration
+class InitSpreeShipmentGiftdetails < ActiveRecord::Migration[4.2]
   def change
     create_table :spree_giftwraps, force: :cascade do |t|
       t.string   "title"
@@ -9,6 +9,8 @@ class InitSpreeShipmentGiftdetails < ActiveRecord::Migration
 
     add_column :spree_shipments, :giftwrap_id, :integer, null: true
     add_column :spree_shipments, :giftmessage, :text, null: false, default: ''
+    add_column :spree_shipments, :message_to, :string, null: false, default: ''
+    add_column :spree_shipments, :message_from, :string, null: false, default: ''
 
     if Spree::Giftwrap.all.blank?
       Spree::Giftwrap.create(

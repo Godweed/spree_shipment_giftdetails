@@ -1,0 +1,15 @@
+<h1>Gift details</h1>
+<% if ship_form.object.giftwrap_allowed? && !active_giftwrap.nil? %>
+  <%= ship_form.check_box :giftwrap_id, {}, active_giftwrap.id %>
+  <%= ship_form.label :giftwrap_id, "#{Spree.t(:add_gift_wrapping)} (#{active_giftwrap.amount})" %>
+<% else %>
+  <%= ship_form.hidden_field :giftwrap_id, value: 0 %>
+<% end %>
+<br>
+<%= ship_form.label :message_from, Spree.t(:message_from) %>
+<%= ship_form.text_field :message_from %>
+<br>
+<%= ship_form.label :message_to, Spree.t(:message_to) %>
+<%= ship_form.text_field :message_to %>
+<p><%= Spree.t(:gift_message) %></p>
+<%= ship_form.text_area :giftmessage %>
