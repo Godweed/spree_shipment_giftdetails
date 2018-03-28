@@ -1,7 +1,11 @@
 en:
   spree:
-    giftwrap: "Gift Wrap"
     add_gift_message: "Add Gift Message"
     add_gift_wrapping: "Add Gift Wrapping"
     disable_giftwrap: "Disable Giftwrap"
+    giftwrap: "Gift Wrap"
     gift_message: "Gift Message"
+    message_from: Message from
+    message_to: Message to
+    shipment_updated: Shipment has been updated
+    shipment_save_fail: Shipment could not be processed, please check the details you entered
