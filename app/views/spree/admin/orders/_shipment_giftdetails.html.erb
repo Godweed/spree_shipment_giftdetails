@@ -10,58 +10,85 @@
   </tr>
 <% end %>
 
-<tr>
-  <td colspan="11">
-    <%= form_for shipment, { url: admin_update_shipment_gift_details_path } do |f| %>
-      <% giftwrap_id = "#{shipment.id}_giftwrap" %>
-      <fieldset class="no-border-bottom" id="order-gift" data-hook="order_shipment_gift_details">
-        <input type="hidden" name="id" value="<%= @order.number %>" />
-        <input type="hidden" name="shipment_id" value="<%= shipment.number %>" />
-        <div class="col-xs-12">
-          <div class="row">
-            <div class="col-xs-12 col-md-6">
-              <%= f.field_container :giftwrap_id, class: ['form-group'] do %>
-                <% if f.object.giftwrap_allowed? && !active_giftwrap.nil? %>
-                  <%= f.check_box :giftwrap_id, { id: giftwrap_id }, active_giftwrap.id %>
-                  <%= f.label :giftwrap_id, "#{Spree.t(:add_gift_wrapping)} (#{active_giftwrap.amount})", for: giftwrap_id  %>
-                <% else %>
-                  <%= f.hidden_field :giftwrap_id, value: 0 %>
+<% if ['pending', 'ready'].include? shipment.state %>
+  <tr>
+    <td colspan="11">
+      <%= form_for shipment, { url: admin_update_shipment_gift_details_path } do |f| %>
+        <% giftwrap_id = "#{shipment.id}_giftwrap" %>
+        <fieldset class="no-border-bottom" id="order-gift" data-hook="order_shipment_gift_details">
+          <input type="hidden" name="id" value="<%= @order.number %>" />
+          <input type="hidden" name="shipment_id" value="<%= shipment.number %>" />
+          <div class="col-xs-12">
+            <div class="row">
+              <div class="col-xs-12 col-md-6">
+                <%= f.field_container :giftwrap_id, class: ['form-group'] do %>
+                  <% if f.object.giftwrap_allowed? && !active_giftwrap.nil? %>
+                    <%= f.check_box :giftwrap_id, { id: giftwrap_id }, active_giftwrap.id %>
+                    <%= f.label :giftwrap_id, "#{Spree.t(:add_gift_wrapping)} (#{active_giftwrap.amount})", for: giftwrap_id  %>
+                  <% else %>
+                    <%= f.hidden_field :giftwrap_id, value: 0 %>
+                  <% end %>
                 <% end %>
-              <% end %>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-12 col-md-6">
+                <%= f.field_container :message_from, class: ['form-group'] do %>
+                  <%= f.label :message_from, Spree.t(:message_from) %>
+                  <%= f.text_field :message_from, class: 'form-control' %>
+                  <%= f.error_message_on :message_from %>
+                <% end %>
+              </div>
+              <div class="col-xs-12 col-md-6">
+                <%= f.field_container :message_to, class: ['form-group'] do %>
+                  <%= f.label :message_to, Spree.t(:message_to) %>
+                  <%= f.text_field :message_to, class: 'form-control' %>
+                  <%= f.error_message_on :message_to %>
+                <% end %>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-12">
+                <%= f.field_container :giftmessage, class: ['form-group'] do %>
+                  <%= f.label :giftmessage, Spree.t(:gift_message) %></p>
+                  <%= f.text_area :giftmessage, class: 'form-control' %>
+                  <%= f.error_message_on :giftmessage %>
+                <% end %>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-12 col-md-6">
+                <%= button Spree.t('actions.update'), 'refresh', 'submit', {class: 'btn-success', data: { disable_with: "#{ Spree.t(:saving) }..." }} %>
+              </div>
             </div>
           </div>
-          <div class="row">
-            <div class="col-xs-12 col-md-6">
-              <%= f.field_container :message_from, class: ['form-group'] do %>
-                <%= f.label :message_from, Spree.t(:message_from) %>
-                <%= f.text_field :message_from, class: 'form-control' %>
-                <%= f.error_message_on :message_from %>
-              <% end %>
-            </div>
-            <div class="col-xs-12 col-md-6">
-              <%= f.field_container :message_to, class: ['form-group'] do %>
-                <%= f.label :message_to, Spree.t(:message_to) %>
-                <%= f.text_field :message_to, class: 'form-control' %>
-                <%= f.error_message_on :message_to %>
-              <% end %>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-xs-12">
-              <%= f.field_container :giftmessage, class: ['form-group'] do %>
-                <%= f.label :giftmessage, Spree.t(:gift_message) %></p>
-                <%= f.text_area :giftmessage, class: 'form-control' %>
-                <%= f.error_message_on :giftmessage %>
-              <% end %>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-xs-12 col-md-6">
-              <%= button Spree.t('actions.update'), 'refresh', 'submit', {class: 'btn-success', data: { disable_with: "#{ Spree.t(:saving) }..." }} %>
-            </div>
-          </div>
-        </div>
-      </fieldset>
-    <% end %>
-  </td>
-</tr>
+        </fieldset>
+      <% end %>
+    </td>
+  </tr>
+<% elsif !shipment.giftmessage.blank? %>
+  <tr>
+    <td>
+      <strong>From</strong>
+    </td>
+    <td colspan="10">
+      <%= shipment.message_from %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <strong>To</strong>
+    </td>
+    <td colspan="10">
+      <%= shipment.message_to %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <strong>Gift Message</strong>
+    </td>
+    <td colspan="10">
+      <%= shipment.giftmessage %>
+    </td>
+  </tr>
+<% end %>
