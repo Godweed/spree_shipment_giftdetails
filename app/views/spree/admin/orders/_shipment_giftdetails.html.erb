@@ -1,6 +1,6 @@
 <% unless shipment.giftwrap.blank? %>
   <tr>
-    <td colspan="9">
+    <td colspan="7">
       <strong>Gift Wrap</strong>
     </td>
     <td class="total text-center">
@@ -12,7 +12,7 @@
 
 <% if ['pending', 'ready'].include? shipment.state %>
   <tr>
-    <td colspan="11">
+    <td colspan="9">
       <%= form_for shipment, { url: admin_update_shipment_gift_details_path } do |f| %>
         <% giftwrap_id = "#{shipment.id}_giftwrap" %>
         <fieldset class="no-border-bottom" id="order-gift" data-hook="order_shipment_gift_details">
@@ -71,7 +71,7 @@
     <td>
       <strong>From</strong>
     </td>
-    <td colspan="10">
+    <td colspan="8">
       <%= shipment.message_from %>
     </td>
   </tr>
@@ -79,7 +79,7 @@
     <td>
       <strong>To</strong>
     </td>
-    <td colspan="10">
+    <td colspan="8">
       <%= shipment.message_to %>
     </td>
   </tr>
@@ -87,7 +87,7 @@
     <td>
       <strong>Gift Message</strong>
     </td>
-    <td colspan="10">
+    <td colspan="8">
       <%= shipment.giftmessage %>
     </td>
   </tr>
